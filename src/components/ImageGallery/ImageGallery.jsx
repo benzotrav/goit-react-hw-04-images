@@ -1,11 +1,11 @@
-import { Gallery } from './ImageGallery-styled';
+import { Gallery } from './ImageGallery.styled';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import PropTypes from 'prop-types';
 
-export const ImageGallery = ({ data, toggleLargeMode }) => {
+export const ImageGallery = ({ images, toggleLargeMode }) => {
   return (
     <Gallery>
-      {data.map(({ id, largeImageURL, webformatURL, tags }) => {
+      {images.map(({ id, largeImageURL, webformatURL, tags }) => {
         return (
           <ImageGalleryItem
             key={id}
@@ -28,6 +28,6 @@ ImageGallery.propTypes = {
       webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,
     })
-  ).isRequired,
-  toggleLargeMode: PropTypes.func.isRequired,
+  ),
+  toggleLargeMode: PropTypes.func,
 };

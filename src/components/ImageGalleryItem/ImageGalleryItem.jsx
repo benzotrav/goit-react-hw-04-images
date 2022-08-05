@@ -1,10 +1,9 @@
+import { GalleryItem } from './ImageGalleryItem.styled.js';
 import PropTypes from 'prop-types';
-import { GalleryItem } from './ImageGalleryItem-styled';
 
 export const ImageGalleryItem = ({ url, preview, alt, toggleLargeMode }) => {
   return (
     <GalleryItem
-      className="gallery"
       onClick={() => {
         toggleLargeMode({ url, alt });
       }}
@@ -17,6 +16,6 @@ export const ImageGalleryItem = ({ url, preview, alt, toggleLargeMode }) => {
 ImageGalleryItem.propTypes = {
   url: PropTypes.string.isRequired,
   preview: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  toggleLargeMode: PropTypes.func.isRequired,
+  alt: PropTypes.string,
+  toggleLargeMode: PropTypes.func,
 };

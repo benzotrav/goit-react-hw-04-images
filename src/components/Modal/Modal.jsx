@@ -1,45 +1,44 @@
-import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
+import { Overlay, ModalContent } from './Modal.styled';
 import PropTypes from 'prop-types';
-import { Overlay, Content } from './Modal-styled';
+import { useEffect} from 'react';
 
-const modalRoot = document.querySelector('#modal-root'); 
+const modalRoot = document.querySelector('#modal-root');
 
-export class Modal extends Component { 
-  
-  componentDidMount() { 
-    document.addEventListener('keydown', this.handleKeyDown); 
-  }
+export const Modal = ({ largeImg, onClose, alt }) => { 
+    useEffect(() => {
+        const handleKeyDown = e => {
+          if (e.code === 'Escape') {
+            onClose();
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+      }, [onClose]);
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown); 
-  }
-
-  handleKeyDown = (e) => { 
-    if (e.key === 'Escape') { 
-      this.props.onClose(); 
-    }
-  }
-
-  handleOverlayClick = event => { 
-     if (event.currentTarget === event.target) { 
-       this.props.onClose(); 
-     }
-   };
-
-   render() {
-    return createPortal( 
-      <Overlay onClick={this.handleOverlayClick}>
-        <Content>{this.props.children}</Content>
-      </Overlay>,
-      modalRoot 
-    );
-  }
+     const handleOverlayClick = event => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }
+      console.log(largeImg);
+      
+      return createPortal(
+        <Overlay onClick={handleOverlayClick}>
+            <ModalContent>
+              <img src={largeImg} alt={alt} />
+            </ModalContent>
+        </Overlay>,
+        modalRoot
+        );
+       
 }
 
-
 Modal.propTypes = {
-  img: PropTypes.string,
-  alt: PropTypes.string,
-  onClick: PropTypes.func,
+  largeImg: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
+ 

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
+
 export const Gallery = styled.ul`
+  position:relative;
   display: grid;
   max-width: calc(100vw - 48px);
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -11,4 +13,4 @@ export const Gallery = styled.ul`
   list-style: none;
   margin-left: auto;
   margin-right: auto;
-`
+`;
