@@ -16,7 +16,6 @@ export const App = () => {
   const [images, setImages] = useState([]);
   const [largeImg, setLargeImg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     if (query.trim() === '') {
@@ -32,9 +31,8 @@ export const App = () => {
           });
         };
         setImages(prevImg => [...prevImg, ...imageMapper(foundImages)]);   
-        if (total === 0) {
+        if (query === 0) {
           Notiflix.Notify.failure(`We cant find anything for you.`)
-          setTotal(0);
         }
 
       } catch (error) {
@@ -45,7 +43,7 @@ export const App = () => {
     }
     getImages();
     
-  }, [query, page, total]);
+  }, [query, page]);
 
 
 
