@@ -6,8 +6,9 @@ import { Loader } from "./Loader/Loader";
 import { Modal } from "./Modal/Modal";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { ToastContainer, toast } from "react-toastify";
 import { fetchImages } from "API/API";
+import Notiflix from 'notiflix';
+
 
 export const App = () => {
   const [query, setQuery] = useState('');
@@ -15,11 +16,13 @@ export const App = () => {
   const [images, setImages] = useState([]);
   const [largeImg, setLargeImg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     if (query.trim() === '') {
-      return;
+      return;         
     }
+    
     async function getImages() {
       try{
         const foundImages = await fetchImages(query, page);
@@ -28,15 +31,24 @@ export const App = () => {
             return { id, webformatURL, largeImageURL, alt: tags };
           });
         };
-        setImages(prevImg => [...prevImg, ...imageMapper(foundImages)]);
-      } catch {
-        return toast.error("Sorry, we didn't find anything");
-      } finally {
+        setImages(prevImg => [...prevImg, ...imageMapper(foundImages)]);   
+        if (total === 0) {
+          Notiflix.Notify.failure(`We cant find anything for you.`)
+          setTotal(0);
+        }
+
+      } catch (error) {
+        Notiflix.Notify.failure(`Sorry, try again - ${error.message} `);
         setIsLoading(false);
-      }
+      } 
+      
     }
     getImages();
-  }, [query, page]);
+    
+  }, [query, page, total]);
+
+
+
 
   const onChangeQuery = query => {
     setQuery(query);
@@ -55,7 +67,6 @@ export const App = () => {
     return (
       <AppBox>
         <SearchBar onSubmit={onChangeQuery} />
-        <ToastContainer autoClose={3000} />
         {isLoading ? <Loader /> : null}
         {images.length > 0 && (
           <ImageGallery
