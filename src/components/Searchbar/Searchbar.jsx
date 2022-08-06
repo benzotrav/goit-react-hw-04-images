@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 import {SearchBarStyled, SearchForm, SearchInput, ButtonSearch} from './SearchBar.styled';
-import { toast } from 'react-toastify';
+import Notiflix from 'notiflix';
 
 
 export const SearchBar = ({onSubmit}) => {
@@ -14,7 +14,7 @@ export const SearchBar = ({onSubmit}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (query.trim() === '') {
-            return toast.error('Please enter a search query');
+            return Notiflix.Notify.failure('Please enter a search query');
         }
         onSubmit(query);
         setQuery('');

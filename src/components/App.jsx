@@ -30,8 +30,8 @@ export const App = () => {
             return { id, webformatURL, largeImageURL, alt: tags };
           });
         };
-        setImages(prevImg => [...prevImg, ...imageMapper(foundImages)]);   
-        if (query === 0) {
+        setImages(prevImg => [...prevImg, ...imageMapper(foundImages.hits)]);   
+        if (foundImages.total === 0) {
           Notiflix.Notify.failure(`We cant find anything for you.`)
         }
 
