@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {useState} from 'react';
-import {SearchBarStyled, SearchForm, SearchInput, ButtonSearch} from './searchbar.styled';
+import {SearchBarStyled, SearchForm, SearchInput, ButtonSearch} from './SearchBar1.styled';
 import Notiflix from 'notiflix';
 
 
