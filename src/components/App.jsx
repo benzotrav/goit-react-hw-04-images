@@ -72,7 +72,7 @@ export const App = () => {
             toggleLargeMode={toggleLargeMode}
             />
         )}
-        {images.length > 0 && !isLoading && <Button onClick={loadMore} />}
+        {!isLoading && images.length / page === 12 && <Button onClick={loadMore}/>}
         {largeImg && (
         <Modal largeImg={largeImg.url} alt={query} onClose={toggleLargeMode} />
       )}
